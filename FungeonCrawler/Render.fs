@@ -3,30 +3,39 @@
 open Types
 open System
 
+let cprintf color value = 
+    Printf.kprintf 
+        (fun string -> 
+            //let old = Console.ForegroundColor 
+            //try 
+            Console.ForegroundColor <- color;
+            Console.Write string)
+            //finally
+            //    Console.ForegroundColor <- old) 
+        value
+        
+let Draw color x y (text : string) =
+    Console.SetCursorPosition(x, y)
+    cprintf color "%s" text
+
 let PresentToConsole creature = 
     Console.SetCursorPosition(0, 0)
-    printfn "Name: %O, level: %A, experience points: %A" creature.Name creature.Level creature.ExperiencePoints
-    printfn "Health: %O, damage: %A" creature.Health creature.Damage
-
-let Draw x y (char : string) =
-    Console.SetCursorPosition(x, y)
-    Console.Write(char)
+    cprintf ConsoleColor.White "Name: %O, level: %A, experience points: %A\n" creature.Name creature.Level creature.ExperiencePoints
+    cprintf ConsoleColor.White "Health: %O, damage: %A" creature.Health creature.Damage
 
 let TileToChar tile = 
     match tile with
-    |Tile.Unblocked -> " "
+    |Unblocked -> " "
     |_ -> "#"
 
 let DrawTile xYTuple tile x y = 
     let playerScreenCoordinates = {x = 20 ; y = 10}
     let worldCoordinates = {x = playerScreenCoordinates.x + x - xYTuple.x ; y = playerScreenCoordinates.y + y - xYTuple.y}
+    Draw ConsoleColor.Yellow playerScreenCoordinates.x playerScreenCoordinates.y "O"
+    TileToChar tile |> Draw ConsoleColor.DarkGreen worldCoordinates.x worldCoordinates.y
     
-    Draw playerScreenCoordinates.x playerScreenCoordinates.y "O"
-    TileToChar tile |> Draw worldCoordinates.x worldCoordinates.y
-    
-
 let RenderWorld (world:Tile[][]) xYTuple =
-    for x = xYTuple.x - 5 to xYTuple.x + 5 do
-        for y = xYTuple.y - 2 to xYTuple.y + 2 do
-            DrawTile xYTuple world.[x].[y] x y
-            // Todo: Fix out of bounds exception
+    for x = xYTuple.x - 15 to xYTuple.x + 15 do
+        for y = xYTuple.y - 7 to xYTuple.y + 7 do
+            if x > 0 && x < world.Length && y > 0 && y < world.Length then 
+                DrawTile xYTuple world.[x].[y] x y

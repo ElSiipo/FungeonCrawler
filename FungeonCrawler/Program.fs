@@ -10,23 +10,24 @@ let newStateFromCreature state creature =
     {State.Creature = creature ; World = state.World}
 
 let rec mainLoop state =
-        Threading.Thread.Sleep(100)
-        Console.Clear()
-        
-        let creature = checkGetMove state.Creature
-        
-        let newState = newStateFromCreature state creature
+    //Threading.Thread.Sleep(10)
+    //Console.Clear()
 
-        Render.RenderWorld state.World creature.Coordinates
+    let creature = checkGetMove state.World state.Creature
+    let newState = newStateFromCreature state creature
 
-        mainLoop newState
+    PresentToConsole creature
+    RenderWorld state.World creature.Coordinates
+
+    mainLoop newState
 
 
 [<EntryPoint>]
 let game argv = 
     let creature = InitializeCreature
     let world = CreateWorld 100
-
+    
+    Console.Clear()
     mainLoop {World = world ; Creature = creature}
 
     let line = Console.ReadLine();

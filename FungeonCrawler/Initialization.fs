@@ -3,20 +3,21 @@
 open System
 open Types
 
-let rnd = System.Random()
+let rnd = Random()
 
 let InitializeCreature =
     printf "Name of creature: "
+    let name = Console.ReadLine()
     Console.Clear()
-    let creature : Creature = {Name = "name"; Health = System.Random().Next(80, 120) ; Damage = 1; Level = 1; ExperiencePoints = 0; Coordinates = {x = 10; y = 10}}
+    let creature : Creature = {Name = name; Health = Random().Next(80, 120) ; Damage = 1; Level = 1; ExperiencePoints = 0; Coordinates = {x = 10; y = 10}}
     
     creature
 
 let GetRandomTile i = 
     let nextRand = rnd.Next(0, 100)
     match nextRand > 30 with
-    |true -> Tile.Unblocked
-    |_ -> Tile.Block
+    |true -> Unblocked
+    |_ -> Block
 
 let CreateWorld size = 
     let makeLineOfTiles2 = fun _ -> Array.init size (fun i -> GetRandomTile i)
