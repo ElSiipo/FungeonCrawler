@@ -11,10 +11,11 @@ let InitializeCreature name =
     creature
 
 let GetRandomTile i = 
-    let nextRand = rnd.Next(0, 100)
-    match nextRand > 30 with
-    |true -> Unblocked
-    |_ -> Block
+    let nextRand = rnd.Next(0, 1000)
+    match nextRand with
+    | nextRand when nextRand > 300 -> Unblocked
+    | nextRand when nextRand > 5 && nextRand < 300 -> Block
+    | _ -> Monster
 
 let CreateWorld size = 
     let makeLineOfTiles2 = fun _ -> Array.init size (fun i -> GetRandomTile i)

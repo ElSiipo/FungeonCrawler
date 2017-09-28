@@ -14,16 +14,16 @@ let checkMoveValid (world:Tile[][]) xYTuple =
         | _ -> false
     else false
 
-let createTupleXy creature x y =
+let tupleXyAdd creature x y =
     {x = creature.Coordinates.x + x; y = creature.Coordinates.y + y}
 
 let Control (world:Tile[][]) creature =
     let key = Console.ReadKey(true)
     match key.Key with
-    | ConsoleKey.UpArrow -> if createTupleXy creature 0 -1 |> checkMoveValid world  then MoveCreature creature {XYTuple.x = 0; y = -1} else creature
-    | ConsoleKey.RightArrow -> if createTupleXy creature 1 0 |> checkMoveValid world then MoveCreature creature {XYTuple.x = 1; y = 0} else creature
-    | ConsoleKey.DownArrow -> if createTupleXy creature 0 1 |> checkMoveValid world then MoveCreature creature {XYTuple.x = 0; y = 1} else creature
-    | ConsoleKey.LeftArrow -> if createTupleXy creature -1 0 |> checkMoveValid world then MoveCreature creature {XYTuple.x = -1; y = 0} else creature
+    | ConsoleKey.UpArrow -> if tupleXyAdd creature 0 -1 |> checkMoveValid world  then MoveCreature creature {XYTuple.x = 0; y = -1} else creature
+    | ConsoleKey.RightArrow -> if tupleXyAdd creature 1 0 |> checkMoveValid world then MoveCreature creature {XYTuple.x = 1; y = 0} else creature
+    | ConsoleKey.DownArrow -> if tupleXyAdd creature 0 1 |> checkMoveValid world then MoveCreature creature {XYTuple.x = 0; y = 1} else creature
+    | ConsoleKey.LeftArrow -> if tupleXyAdd creature -1 0 |> checkMoveValid world then MoveCreature creature {XYTuple.x = -1; y = 0} else creature
     | _ -> creature
 
 let checkGetMove world creature =

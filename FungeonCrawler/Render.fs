@@ -6,6 +6,7 @@ open System
 let cprintf color value = 
     Printf.kprintf 
         (fun string -> 
+            Console.CursorVisible <- false
             Console.ForegroundColor <- color;
             Console.Write string)
         value
@@ -21,14 +22,19 @@ let PresentToConsole creature =
 
 let TileToChar tile = 
     match tile with
-    |Unblocked -> " "
-    |_ -> "#"
+    | Unblocked -> " "
+    | Block -> "¥"
+    | Monster -> "M"
 
 let DrawTile xYTuple tile x y = 
     let playerScreenCoordinates = {x = 20 ; y = 10}
     let worldCoordinates = {x = playerScreenCoordinates.x + x - xYTuple.x ; y = playerScreenCoordinates.y + y - xYTuple.y}
     Draw ConsoleColor.Yellow playerScreenCoordinates.x playerScreenCoordinates.y "O"
-    TileToChar tile |> Draw ConsoleColor.DarkGreen worldCoordinates.x worldCoordinates.y
+    
+    match tile with
+    | Unblocked -> TileToChar tile |> Draw ConsoleColor.DarkGreen worldCoordinates.x worldCoordinates.y 
+    | Block -> TileToChar tile |> Draw ConsoleColor.DarkGreen worldCoordinates.x worldCoordinates.y 
+    | Monster -> TileToChar tile |> Draw ConsoleColor.DarkRed worldCoordinates.x worldCoordinates.y
     
 let RenderWorld (world:Tile[][]) xYTuple =
     for x = xYTuple.x - 15 to xYTuple.x + 15 do
