@@ -5,10 +5,7 @@ open Types
 
 let rnd = Random()
 
-let InitializeCreature =
-    printf "Name of creature: "
-    let name = Console.ReadLine()
-    Console.Clear()
+let InitializeCreature name =
     let creature : Creature = {Name = name; Health = Random().Next(80, 120) ; Damage = 1; Level = 1; ExperiencePoints = 0; Coordinates = {x = 10; y = 10}}
     
     creature

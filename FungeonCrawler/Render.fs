@@ -6,12 +6,8 @@ open System
 let cprintf color value = 
     Printf.kprintf 
         (fun string -> 
-            //let old = Console.ForegroundColor 
-            //try 
             Console.ForegroundColor <- color;
             Console.Write string)
-            //finally
-            //    Console.ForegroundColor <- old) 
         value
         
 let Draw color x y (text : string) =

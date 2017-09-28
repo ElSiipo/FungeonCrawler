@@ -10,9 +10,6 @@ let newStateFromCreature state creature =
     {State.Creature = creature ; World = state.World}
 
 let rec mainLoop state =
-    //Threading.Thread.Sleep(10)
-    //Console.Clear()
-
     let creature = checkGetMove state.World state.Creature
     let newState = newStateFromCreature state creature
 
@@ -24,7 +21,9 @@ let rec mainLoop state =
 
 [<EntryPoint>]
 let game argv = 
-    let creature = InitializeCreature
+    printf "Name of creature: "
+    let name = Console.ReadLine()
+    let creature = InitializeCreature name
     let world = CreateWorld 100
     
     Console.Clear()
