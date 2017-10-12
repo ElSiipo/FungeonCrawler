@@ -13,9 +13,8 @@ let rec mainLoop state =
     let creature = checkGetMove state.World state.Creature
     let newState = newStateFromCreature state creature
     
-    RenderUI creature
-    RenderWorld state.World creature.Coordinates
-
+    Render state creature
+    
     mainLoop newState
 
 

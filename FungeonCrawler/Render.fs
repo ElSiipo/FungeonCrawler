@@ -34,4 +34,9 @@ let PrintCreatureInfo creature =
 
 let RenderUI creature =
     PrintCreatureInfo creature
-    DrawRect ConsoleColor.Cyan 10 40 80 50 
+    DrawRect ConsoleColor.Cyan 5 18 35 28 
+    DrawRect ConsoleColor.DarkYellow 36 2 46 17
+
+let Render state creature =
+    RenderUI creature
+    RenderWorld state.World creature.Coordinates
