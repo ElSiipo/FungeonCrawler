@@ -1,5 +1,5 @@
 ﻿module ShapeRenderer
-open Render
+open Draw
 
 let DrawRect color x1 y1 x2 y2 =
     // horizontal lines
