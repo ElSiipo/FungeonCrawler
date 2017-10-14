@@ -12,10 +12,9 @@ let newStateFromCreature state creature =
 let rec mainLoop state =
     let creature = checkGetMove state.World state.Creature
     let newState = newStateFromCreature state creature
-
-    PrintCreatureInfo creature
-    RenderWorld state.World creature.Coordinates
-
+    
+    Render state creature
+    
     mainLoop newState
 
 

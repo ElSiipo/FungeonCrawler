@@ -2,19 +2,9 @@
 
 open Types
 open System
+open ShapeRenderer
+open Draw
 
-let cprintf color value = 
-    Printf.kprintf 
-        (fun string -> 
-            Console.CursorVisible <- false
-            Console.ForegroundColor <- color;
-            Console.Write string)
-        value
-        
-let Draw color x y (text : string) =
-    Console.SetCursorPosition(x, y)
-    cprintf color "%s" text
-    
 let TileToChar tile = 
     match tile with
     | Unblocked -> " "
@@ -36,8 +26,17 @@ let RenderWorld (world:Tile[][]) xYTuple =
         for y = xYTuple.y - 7 to xYTuple.y + 7 do
             if x > 0 && x < world.Length && y > 0 && y < world.Length then 
                 DrawTile xYTuple world.[x].[y] x y
-
+                
 let PrintCreatureInfo creature = 
     Console.SetCursorPosition(0, 0)
     cprintf ConsoleColor.White "Name: %O, level: %A, experience points: %A\n" creature.Name creature.Level creature.ExperiencePoints
     cprintf ConsoleColor.White "Health: %O, damage: %A" creature.Health creature.Damage
+
+let RenderUI creature =
+    PrintCreatureInfo creature
+    DrawRect ConsoleColor.Cyan 5 18 35 28 
+    DrawRect ConsoleColor.DarkYellow 36 2 46 17
+
+let Render state creature =
+    RenderUI creature
+    RenderWorld state.World creature.Coordinates
