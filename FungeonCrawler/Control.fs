@@ -1,7 +1,7 @@
 ﻿module Control
 
 open System
-open Types
+open TypeRepository
 
 let MoveCreature creature move = 
     let newCoordinates = {x = creature.Coordinates.x + move.x ; y = creature.Coordinates.y + move.y }

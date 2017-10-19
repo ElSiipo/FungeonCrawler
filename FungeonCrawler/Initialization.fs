@@ -1,7 +1,7 @@
 ﻿module Initialization
 
 open System
-open Types
+open TypeRepository
 
 let rnd = Random()
 

@@ -1,9 +1,9 @@
 ﻿module Program
 
 open System
-open Types
+open TypeRepository
 open Initialization
-open Render
+open Renderer
 open Control
 
 let newStateFromCreature state creature =
