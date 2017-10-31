@@ -5,9 +5,9 @@ type Creature = {Name : string; Health : int; Damage : int; Level : int; Experie
 
 type Weapon = {Name : string; Damage : int}
 type Utility = {Name : string}
-type Item = Weapon | Utility
+type Item = WeaponItem of Weapon | UtilityItem of Utility
 
-type Tile = Unblocked | Block | Monster | Item
+type Tile = Unblocked | Block | MonsterTile of Creature | ItemTile of Item
 type Obstacle = Tree | Stone 
 
 

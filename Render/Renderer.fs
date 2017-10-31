@@ -9,20 +9,24 @@ let TileToChar tile =
     match tile with
     | Unblocked -> " "
     | Block -> "¥"
-    | Monster -> "M"
+    | Creature -> "M"
+
+let DrawItem item worldCoordinates =
+    match item with
+    | TypeRepository.Weapon -> TileToChar item |> Draw ConsoleColor.Red worldCoordinates //Vi behöver göra konstruktorer för dessa verkar det som :/
+    | Utility -> TileToChar item |> Draw ConsoleColor.Yellow worldCoordinates
 
 let DrawTile xYTuple tile x y = 
     let playerScreenCoordinates = {x = 20 ; y = 10}
     let worldCoordinates = {x = playerScreenCoordinates.x + x - xYTuple.x ; y = playerScreenCoordinates.y + y - xYTuple.y}
-    Draw ConsoleColor.Yellow playerScreenCoordinates.x playerScreenCoordinates.y "O"
+    Draw ConsoleColor.Yellow playerScreenCoordinates "O"
     
     match tile with
-    | Unblocked -> TileToChar tile |> Draw ConsoleColor.DarkGreen worldCoordinates.x worldCoordinates.y 
-    | Block -> TileToChar tile |> Draw ConsoleColor.DarkGreen worldCoordinates.x worldCoordinates.y 
-    | Monster -> TileToChar tile |> Draw ConsoleColor.DarkRed worldCoordinates.x worldCoordinates.y
-    | Item ->  match tile with
-                | Utility -> TileToChar tile |> Draw ConsoleColor.Yellow worldCoordinates.x worldCoordinates.y 
-                | Weapon -> TileToChar tile |> Draw ConsoleColor.Red worldCoordinates.x worldCoordinates.y // Send in worldCoordinates instead
+    | Unblocked -> TileToChar tile |> Draw ConsoleColor.DarkGreen worldCoordinates
+    | Block -> TileToChar tile |> Draw ConsoleColor.DarkGreen worldCoordinates
+    | Item ->  DrawItem tile worldCoordinates
+    | Monster -> TileToChar tile |> Draw ConsoleColor.DarkRed worldCoordinates
+                
     
 let RenderWorld (world:Tile[][]) heroPosition =
     for x = heroPosition.x - 15 to heroPosition.x + 15 do

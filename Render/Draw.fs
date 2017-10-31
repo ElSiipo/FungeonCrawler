@@ -1,5 +1,6 @@
 ﻿module Draw
 open System
+open TypeRepository
 
 let cprintf color value = 
     Printf.kprintf 
@@ -9,6 +10,6 @@ let cprintf color value =
             Console.Write string)
         value
         
-let Draw color x y (text : string) =
-    Console.SetCursorPosition(x, y)
+let Draw color xYTuple (text : string) =
+    Console.SetCursorPosition(xYTuple.x, xYTuple.y)
     cprintf color "%s" text
